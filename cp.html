@@ -1,119 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control Panel</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Control Panel - Unblocker Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    background: url("./bg.png") no-repeat center/cover;
-    font-family: -apple-system, BlinkMacSystemFont;
-    color: white;
-  }
+:root{--glass-bg:rgba(255,255,255,0.06);--muted:#cbd5e1;--accent:#ffcc00}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#fff}
+body{background:url('bg.png') center/cover no-repeat fixed;background-color:#071025}
+.overlay{position:fixed;inset:0;background:rgba(6,8,12,0.45);z-index:0}
 
-  nav {
-    position: fixed;
-    top: 45px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 40px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 40px;
-    display: flex;
-    gap: 35px;
-    z-index: 20;
-    backdrop-filter: blur(12px) brightness(1.4);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.45),
-                0 0 25px rgba(255,255,255,0.25);
-  }
+/* topbar */
+.topbar-wrap{position:fixed;left:50%;top:36px;transform:translateX(-50%);z-index:60}
+nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;border-radius:999px;background:var(--glass-bg);backdrop-filter:blur(8px) saturate(150%) brightness(1.12);border:1px solid rgba(255,255,255,0.14);height:56px}
+.topbar-link{color:#fff;text-decoration:none;font-weight:600;padding:6px 12px;border-radius:12px;transition:all .18s ease}
+.topbar-link.active{background:rgba(255,204,0,0.12);color:var(--accent)}
 
-  nav a { color:white; text-decoration:none; font-weight:600; }
+/* logo */
+.logo{position:fixed;width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(10px) brightness(1.12);border:1px solid rgba(255,255,255,0.14);box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:70;display:flex;align-items:center;justify-content:center;overflow:hidden}
 
-  .panel {
-    margin: 180px auto;
-    width: 80%;
-    padding: 30px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 25px;
-    backdrop-filter: blur(12px) brightness(1.2);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
+/* container */
+.container{max-width:1100px;margin:120px auto;padding:22px;z-index:10;position:relative}
+.card{background:var(--glass-bg);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 50px rgba(2,6,23,0.6)}
 
-  input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 12px;
-    border: none;
-    font-size: 16px;
-  }
+/* form */
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.input{flex:1;padding:10px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);color:#fff}
+textarea.input{min-height:80px;padding:12px}
+.btn{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,#6a11cb,#2575fc);color:#fff;font-weight:700;cursor:pointer}
+.btn.warn{background:linear-gradient(90deg,#ff6b6b,#ff4c4c)}
 
-  button {
-    padding: 12px 20px;
-    border-radius: 12px;
-    border: none;
-    margin: 8px 0;
-    cursor: pointer;
-    font-weight: 600;
-  }
+/* games list */
+.games{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+.gitem{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:8px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04)}
+.gitem .meta{display:flex;gap:12px;align-items:center}
+.gitem img{width:56px;height:40px;object-fit:cover;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
 
-  .add { background: #4cff73; }
-  .delete { background: #ff4c4c; color: white; }
+.small{font-size:13px;color:var(--muted)}
 </style>
 </head>
-
 <body>
+<div class="overlay"></div>
+<img src="https://via.placeholder.com/120x120?text=Logo" class="logo" id="siteLogo" alt="logo">
+<div class="topbar-wrap"><nav class="topbar" id="topbar"></nav></div>
 
-<nav>
-  <a href="index.html">Home</a>
-</nav>
+<div class="container">
+  <div class="card">
+    <h2 style="color:var(--accent)">Control Panel</h2>
+    <div class="small">Add games below. Data stored in browser localStorage.</div>
 
-<div class="panel">
-  <h2>Add a Game</h2>
+    <div style="height:12px"></div>
 
-  <input id="name" placeholder="Game Name">
-  <input id="logo" placeholder="Logo URL">
-  <input id="file" placeholder="Game HTML File (ex: games/snake.html)">
-  <textarea id="desc" placeholder="Description"></textarea>
+    <!-- add game -->
+    <div class="row">
+      <input class="input" id="name" placeholder="Game name (e.g. Snake)">
+      <input class="input" id="logo" placeholder="Logo URL or relative path (e.g. logos/snake.png)">
+    </div>
+    <div style="height:8px"></div>
+    <div class="row">
+      <input class="input" id="file" placeholder="Game file path (e.g. games/snake.html)">
+      <input class="input" id="pos" placeholder="Position (0 = first) - optional">
+    </div>
+    <div style="height:8px"></div>
+    <textarea class="input" id="desc" placeholder="Short description"></textarea>
+    <div style="height:8px"></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn" id="add">Add Game</button>
+      <button class="btn" id="refresh">Signal Refresh</button>
+      <button class="btn" id="importDemo">Add Demo Games</button>
+    </div>
 
-  <button class="add" onclick="addGame()">Add Game</button>
+    <div style="height:18px"></div>
 
-  <h2>Delete Game</h2>
-  <input id="delIndex" placeholder="Game Index Number">
-  <button class="delete" onclick="delGame()">Delete</button>
+    <!-- existing games -->
+    <h3 style="margin:0 0 8px;color:var(--accent)">Existing games</h3>
+    <div class="games" id="gamesList"></div>
+
+    <div style="height:18px"></div>
+
+    <!-- logo editor -->
+    <h3 style="margin:0 0 8px;color:var(--accent)">Site Logo</h3>
+    <div class="small">Set an image path or URL to change the logo shown across pages.</div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <input class="input" id="siteLogoInput" placeholder="path/to/logo.png or https://...">
+      <button class="btn" id="updateLogoBtn">Update Logo</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
-function addGame() {
-  const games = JSON.parse(localStorage.getItem("games") || "[]");
+const storage = window.localStorage;
 
-  games.push({
-    name: name.value,
-    logo: logo.value,
-    file: file.value,
-    description: desc.value
+/* games/topbar init */
+let games = JSON.parse(storage.getItem('games')||'null');
+if(!games){ games = []; storage.setItem('games', JSON.stringify(games)); }
+let topbar = JSON.parse(storage.getItem('topbar')||'null');
+if(!topbar){ topbar = [{label:'Home',href:'index.html'},{label:'Apps',href:'#apps'}]; storage.setItem('topbar', JSON.stringify(topbar)); }
+
+/* set logo from storage if present */
+const logoImg = document.getElementById('siteLogo');
+const storedLogo = storage.getItem('siteLogo');
+if(storedLogo) logoImg.src = storedLogo;
+
+/* render topbar */
+function renderTopbar(){ const tb=document.getElementById('topbar'); tb.innerHTML=''; topbar.forEach((t,i)=>{ const a=document.createElement('a'); a.href=t.href||'#'; a.className='topbar-link'; a.innerText=t.label; tb.appendChild(a); }); }
+renderTopbar();
+
+/* render games list with index + delete + move */
+const gamesList = document.getElementById('gamesList');
+function renderGames(){
+  gamesList.innerHTML = '';
+  games.forEach((g,i)=>{
+    const div = document.createElement('div'); div.className='gitem';
+    div.innerHTML = `
+      <div class="meta">
+        <img src="${g.logo || 'https://via.placeholder.com/150x90?text=No+Logo'}">
+        <div>
+          <div style="font-weight:700">${i}. ${g.name || 'Untitled'}</div>
+          <div class="small">${g.description || ''}</div>
+        </div>
+      </div>
+      <div>
+        <button class="btn" onclick="editGame(${i})">Edit</button>
+        <button class="btn" onclick="moveUp(${i})">▲</button>
+        <button class="btn" onclick="moveDown(${i})">▼</button>
+        <button class="btn warn" onclick="deleteGame(${i})">Delete</button>
+      </div>
+    `;
+    gamesList.appendChild(div);
   });
+}
+renderGames();
 
-  localStorage.setItem("games", JSON.stringify(games));
-  alert("Game added!");
+/* add game */
+document.getElementById('add').addEventListener('click', ()=>{
+  const name = document.getElementById('name').value.trim();
+  const logo = document.getElementById('logo').value.trim();
+  const file = document.getElementById('file').value.trim();
+  const desc = document.getElementById('desc').value.trim();
+  const posVal = document.getElementById('pos').value.trim();
+  if(!name || !logo || !file) return alert('Please fill name, logo and file fields.');
+  const item = {name,logo,file,description:desc};
+  let pos = parseInt(posVal);
+  if(!isNaN(pos) && pos>=0 && pos<=games.length){ games.splice(pos, 0, item); }
+  else games.push(item);
+  storage.setItem('games', JSON.stringify(games));
+  renderGames();
+  // clear inputs
+  document.getElementById('name').value=''; document.getElementById('logo').value=''; document.getElementById('file').value=''; document.getElementById('desc').value=''; document.getElementById('pos').value='';
+});
+
+/* delete, edit, move */
+function deleteGame(i){
+  if(!confirm('Delete this game?')) return;
+  games.splice(i,1);
+  storage.setItem('games', JSON.stringify(games));
+  renderGames();
+}
+function editGame(i){
+  const g = games[i];
+  const name = prompt('Name', g.name); if(name===null) return;
+  const logo = prompt('Logo path/url', g.logo); if(logo===null) return;
+  const file = prompt('File path', g.file); if(file===null) return;
+  const desc = prompt('Description', g.description||''); if(desc===null) return;
+  games[i] = {name,logo,file,description:desc};
+  storage.setItem('games', JSON.stringify(games)); renderGames();
+}
+function moveUp(i){
+  if(i<=0) return;
+  const a = games.splice(i,1)[0]; games.splice(i-1,0,a);
+  storage.setItem('games', JSON.stringify(games)); renderGames();
+}
+function moveDown(i){
+  if(i>=games.length-1) return;
+  const a = games.splice(i,1)[0]; games.splice(i+1,0,a);
+  storage.setItem('games', JSON.stringify(games)); renderGames();
 }
 
-function delGame() {
-  const games = JSON.parse(localStorage.getItem("games") || "[]");
-  const index = Number(delIndex.value);
+/* update logo (saves path to storage and updates site logo img) */
+document.getElementById('updateLogoBtn').addEventListener('click', ()=>{
+  const v = document.getElementById('siteLogoInput').value.trim();
+  if(!v) return alert('Enter logo path or URL');
+  storage.setItem('siteLogo', v);
+  document.querySelectorAll('.logo').forEach(img => img.src = v);
+  alert('Logo updated. Refresh other pages if open.');
+});
 
-  if (games[index]) {
-    games.splice(index, 1);
-    localStorage.setItem("games", JSON.stringify(games));
-    alert("Deleted.");
-  } else {
-    alert("Invalid index.");
+/* signal refresh: other pages listen for storage key starting with uh_reload_ */
+document.getElementById('refresh').addEventListener('click', ()=>{
+  storage.setItem('uh_reload_'+Date.now(), '1');
+  alert('Signalled reload. Refresh index/launcher to see updates (or they will auto-refresh if open).');
+});
+
+/* add demo games for quick testing */
+document.getElementById('importDemo').addEventListener('click', ()=>{
+  const demo = [
+    {name:'Snake',logo:'https://via.placeholder.com/640x360?text=Snake',file:'games/snake.html',description:'Classic snake.'},
+    {name:'Tetris',logo:'https://via.placeholder.com/640x360?text=Tetris',file:'games/tetris.html',description:'Tetris clone.'},
+    {name:'2048',logo:'https://via.placeholder.com/640x360?text=2048',file:'games/2048.html',description:'2048 sliding tiles.'},
+  ];
+  games = games.concat(demo);
+  storage.setItem('games', JSON.stringify(games));
+  renderGames();
+});
+
+/* respond to external updates */
+window.addEventListener('storage', (e)=>{
+  if(e.key && e.key.startsWith('uh_reload_')){
+    games = JSON.parse(storage.getItem('games')||'[]'); renderGames();
+    topbar = JSON.parse(storage.getItem('topbar')||'[]'); renderTopbar();
   }
-}
-</script>
+});
 
+/* renderTopbar helper (used if controlpanel ever modifies topbar) */
+function renderTopbar(){ const tb=document.getElementById('topbar'); tb.innerHTML=''; topbar.forEach(t=>{ const a=document.createElement('a'); a.href=t.href||'#'; a.className='topbar-link'; a.innerText=t.label; tb.appendChild(a); }); }
+renderTopbar();
+</script>
 </body>
 </html>
