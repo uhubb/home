@@ -1,13 +1,11 @@
-<!-- index.html (Ultra-Modern Floating Liquid Glass with Glowing Oval Topbar) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unblocker Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* Apple-like font stack */
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, sans-serif;
     margin: 0;
@@ -34,16 +32,25 @@
     max-width: 1200px;
     height: 60px;
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px) brightness(1.2) saturate(180%);
+    backdrop-filter: blur(12px) brightness(1.3) saturate(180%);
     border-radius: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 40px;
-    padding: 0 40px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.2);
+    padding: 0 20px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.2);
     z-index: 2;
     border: 1px solid rgba(255,255,255,0.15);
+    animation: float 3s ease-in-out infinite alternate;
+  }
+  @keyframes float {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-5px); }
+  }
+  nav img.logo {
+    height: 40px;
+    border-radius: 10px;
   }
   nav a {
     color: #fff;
@@ -80,7 +87,7 @@
     font-size: 32px;
   }
 
-  /* Liquid glass cards with glow */
+  /* Liquid glass game cards */
   .game-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -92,23 +99,17 @@
     border-radius: 30px;
     cursor: pointer;
     transition: transform 0.6s, box-shadow 0.6s, backdrop-filter 0.6s;
-    backdrop-filter: blur(14px) saturate(180%) brightness(1.3);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.1);
-  }
-  .game-card:hover {
-    transform: translateY(-15px) rotateY(12deg) rotateX(6deg);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px) saturate(180%) brightness(1.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.15);
+    transform-style: preserve-3d;
   }
   .game-card img {
     width: 100%;
     border-radius: 25px;
     margin-bottom: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.15);
     transition: transform 0.5s;
-  }
-  .game-card img:hover {
-    transform: scale(1.06);
   }
   .game-card b {
     font-size: 22px;
@@ -132,6 +133,7 @@
 <body>
 
 <nav>
+  <img src="https://via.placeholder.com/40" class="logo" alt="Logo">
   <a href="#games">Games</a>
   <a href="#apps">Apps</a>
 </nav>
@@ -146,11 +148,29 @@
 <script>
   const games = JSON.parse(localStorage.getItem('games') || '[]');
   const list = document.getElementById('gameList');
+
+  // Function to rotate card towards mouse
+  function tiltCard(card, e) {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width/2;
+    const centerY = rect.height/2;
+    const rotateX = ((y - centerY) / centerY) * 10; // max 10deg
+    const rotateY = ((x - centerX) / centerX) * 10;
+    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+  }
+  function resetCard(card) {
+    card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  }
+
   games.forEach((g, i) => {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.innerHTML = `<img src="${g.logo}" alt='${g.name}'><b>${g.name}</b><p>${g.description || ''}</p>`;
     card.onclick = () => window.location.href = `launcher.html?game=${i}`;
+    card.addEventListener('mousemove', e => tiltCard(card, e));
+    card.addEventListener('mouseleave', () => resetCard(card));
     list.appendChild(card);
   });
 </script>
