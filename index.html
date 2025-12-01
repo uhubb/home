@@ -25,10 +25,10 @@ body::after {
 /* Topbar */
 nav {
   position: fixed;
-  top: 50px;
+  top: 40px;
   left: 50%;
   transform: translateX(-50%);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 40px;
   padding: 0 30px;
@@ -37,13 +37,8 @@ nav {
   border-radius: 40px;
   box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.25);
   border: 1px solid rgba(255,255,255,0.15);
-  animation: floatNav 3s ease-in-out infinite alternate;
   z-index: 2;
   height: 60px;
-}
-@keyframes floatNav {
-  0% { transform: translateX(-50%) translateY(0); }
-  100% { transform: translateX(-50%) translateY(-6px); }
 }
 nav a {
   color: #fff;
@@ -63,11 +58,11 @@ nav a.active {
   color: #ffcc00;
 }
 
-/* Floating logo */
+/* Logo aligned with topbar */
 .logo {
   position: fixed;
-  top: 30px;
-  left: calc(50% - 180px);
+  top: 40px;
+  left: calc(50% - 180px); /* aligned to left edge of nav content */
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -75,13 +70,9 @@ nav a.active {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(15px) brightness(1.2) saturate(180%);
   z-index: 3;
-  animation: floatLogo 4s ease-in-out infinite alternate;
-}
-@keyframes floatLogo {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-5px); }
 }
 
+/* Header */
 header {
   padding: 150px 50px 50px;
   text-align: center;
@@ -94,6 +85,7 @@ header {
   text-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
 
+/* Container */
 .container {
   padding: 60px 50px;
   position: relative;
