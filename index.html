@@ -6,148 +6,153 @@
 <title>Unblocker Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, sans-serif;
-    margin: 0;
-    color: #fff;
-    background: url('https://png.pngtree.com/thumb_back/fh260/background/20230721/pngtree-3d-rendered-background-of-liquid-colors-on-iridescent-glass-material-image_3721866.jpg') no-repeat center/cover;
-    background-size: cover;
-    overflow-x: hidden;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.1);
-    z-index: 0;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, sans-serif;
+  margin: 0;
+  color: #fff;
+  background: url('https://png.pngtree.com/thumb_back/fh260/background/20230721/pngtree-3d-rendered-background-of-liquid-colors-on-iridescent-glass-material-image_3721866.jpg') no-repeat center/cover;
+  background-size: cover;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.1);
+  z-index: 0;
+}
 
-  /* Floating oval topbar (auto width) */
-  nav {
-    position: fixed;
-    top: 50px;
-    left: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    padding: 0 30px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px) brightness(1.3) saturate(180%);
-    border-radius: 40px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.25);
-    border: 1px solid rgba(255,255,255,0.15);
-    animation: floatNav 3s ease-in-out infinite alternate;
-    z-index: 2;
-    transform: translateX(-50%);
-  }
-  @keyframes floatNav {
-    0% { transform: translateX(-50%) translateY(0); }
-    100% { transform: translateX(-50%) translateY(-6px); }
-  }
-  nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    transition: 0.3s;
-  }
-  nav a:hover {
-    color: #ffcc00;
-    transform: translateY(-3px) rotateX(5deg);
-  }
+/* Topbar */
+nav {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 30px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px) brightness(1.3) saturate(180%);
+  border-radius: 40px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 25px rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.15);
+  animation: floatNav 3s ease-in-out infinite alternate;
+  z-index: 2;
+  height: 60px;
+}
+@keyframes floatNav {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-6px); }
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  transition: 0.3s;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+nav a:hover {
+  color: #ffcc00;
+  transform: translateY(-3px) rotateX(5deg);
+}
+nav a.active {
+  background: rgba(255,204,0,0.2);
+  color: #ffcc00;
+}
 
-  /* Floating logo near topbar */
-  .logo {
-    position: fixed;
-    top: 30px;          
-    left: calc(50% - 180px); /* aligned to left edge of topbar content */
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px) brightness(1.2) saturate(180%);
-    z-index: 3;
-    animation: floatLogo 4s ease-in-out infinite alternate;
-  }
-  @keyframes floatLogo {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-5px); }
-  }
+/* Floating logo */
+.logo {
+  position: fixed;
+  top: 30px;
+  left: calc(50% - 180px);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px) brightness(1.2) saturate(180%);
+  z-index: 3;
+  animation: floatLogo 4s ease-in-out infinite alternate;
+}
+@keyframes floatLogo {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
 
-  header {
-    padding: 150px 50px 50px;
-    text-align: center;
-    font-size: 48px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    color: #e0e0ff;
-    z-index: 1;
-    position: relative;
-    text-shadow: 0 0 20px rgba(255,255,255,0.3);
-  }
+header {
+  padding: 150px 50px 50px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #e0e0ff;
+  z-index: 1;
+  position: relative;
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
 
-  .container {
-    padding: 60px 50px;
-    position: relative;
-    z-index: 1;
-  }
-  h2 {
-    margin-bottom: 40px;
-    color: #ffcc00;
-    font-size: 32px;
-  }
+.container {
+  padding: 60px 50px;
+  position: relative;
+  z-index: 1;
+}
+h2 {
+  margin-bottom: 40px;
+  color: #ffcc00;
+  font-size: 32px;
+}
 
-  /* Liquid glass game cards */
-  .game-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 35px;
-  }
-  .game-card {
-    background: rgba(255,255,255,0.06);
-    padding: 25px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.6s, box-shadow 0.6s, backdrop-filter 0.6s;
-    backdrop-filter: blur(10px) saturate(180%) brightness(1.3);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.15);
-    transform-style: preserve-3d;
-  }
-  .game-card:hover {
-    transform: translateY(-15px) rotateY(0deg) rotateX(0deg);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.25);
-  }
-  .game-card img {
-    width: 100%;
-    border-radius: 25px;
-    margin-bottom: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.2);
-    transition: transform 0.5s;
-  }
-  .game-card img:hover {
-    transform: scale(1.06);
-  }
-  .game-card b {
-    font-size: 22px;
-    color: #ffd700;
-    display: block;
-    transition: transform 0.3s, text-shadow 0.3s;
-  }
-  .game-card b:hover {
-    transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-    color: #fffa90;
-    text-shadow: 0 0 10px #fff8;
-  }
-  .game-card p {
-    font-size: 14px;
-    color: #ccc;
-    line-height: 1.4;
-    margin-top: 5px;
-  }
+/* Game cards */
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 35px;
+}
+.game-card {
+  background: rgba(255,255,255,0.06);
+  padding: 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.6s, box-shadow 0.6s, backdrop-filter 0.6s;
+  backdrop-filter: blur(10px) saturate(180%) brightness(1.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.15);
+  transform-style: preserve-3d;
+}
+.game-card:hover {
+  transform: translateY(-15px) rotateY(0deg) rotateX(0deg);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.25);
+}
+.game-card img {
+  width: 100%;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(255,255,255,0.2);
+  transition: transform 0.5s;
+}
+.game-card img:hover {
+  transform: scale(1.06);
+}
+.game-card b {
+  font-size: 22px;
+  color: #ffd700;
+  display: block;
+  transition: transform 0.3s, text-shadow 0.3s;
+}
+.game-card b:hover {
+  transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+  color: #fffa90;
+  text-shadow: 0 0 10px #fff8;
+}
+.game-card p {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.4;
+  margin-top: 5px;
+}
 </style>
 </head>
 <body>
@@ -155,7 +160,7 @@
 <img src="https://via.placeholder.com/60" class="logo" alt="Logo">
 
 <nav id="topbar">
-  <a href="#games">Games</a>
+  <a href="#games" class="active">Home</a>
   <a href="#apps">Apps</a>
 </nav>
 
