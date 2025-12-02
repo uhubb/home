@@ -72,19 +72,14 @@ h2{font-size:32px;margin-bottom:25px;color:var(--accent)}
 const list = document.getElementById('gameList');
 
 /* fetch games from local games.json */
+/* fetch games from local games.json (no cache, no localStorage) */
 async function fetchGames(){
-  try {
-    const res = await fetch('games.json');
-    if(!res.ok) throw new Error('Failed to load games.json');
-    const data = await res.json();
-    if(!Array.isArray(data)) throw new Error('games.json must be an array');
-    return data;
-  } catch(err){
-    console.warn('Falling back to localStorage due to error:', err);
-    return JSON.parse(localStorage.getItem('games') || '[]');
-  }
+  const res = await fetch('games.json?nocache=' + Date.now());
+  if(!res.ok) throw new Error('Failed to load games.json');
+  const data = await res.json();
+  if(!Array.isArray(data)) throw new Error('games.json must be an array');
+  return data;
 }
-
 /* render cards */
 function renderGames(games){
   list.innerHTML = '';
