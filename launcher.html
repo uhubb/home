@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Launcher - Unblocker Hub</title>
+<title>Unblocker Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--glass-bg:rgba(255,255,255,0.06);--muted:#cbd5e1;--accent:#ffcc00}
@@ -85,7 +85,7 @@ if(!game){
   gTitle.innerText = game.name || 'Untitled';
   gPath.innerText = game.file || game.url || '';
   // auto load game into iframe
-  iframeContainer.innerHTML = `<iframe src="${game.file || game.url}" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>`;
+  iframeContainer.innerHTML = `<iframe src="${game.file}" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>`;
   iframeContainer.setAttribute('aria-hidden','false');
 
   document.getElementById('btnPlay').addEventListener('click', ()=>{
