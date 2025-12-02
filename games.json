@@ -23,4 +23,10 @@
     "file": "games/1v1lol.html",
     "description": "The Famous 1v1.lol Game!"
   }
+  {
+    "name": "Steal a Brainrot",
+    "logo": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
+    "file": "games/stealbrainrot.html",
+    "description": "Let's Go Steal a Brainrot!!!!"
+  }
 ]
