@@ -10,25 +10,15 @@
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#fff}
 body{background:url('bg.png') center/cover no-repeat fixed;background-color:#071025}
 .overlay{position:fixed;inset:0;background:rgba(6,8,12,0.45);z-index:0}
-
-/* topbar */
 .topbar-wrap{position:fixed;left:50%;top:36px;transform:translateX(-50%);z-index:60}
 nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;border-radius:999px;background:var(--glass-bg);backdrop-filter:blur(8px) saturate(150%) brightness(1.12);border:1px solid rgba(255,255,255,0.14);height:56px}
 .topbar-link{color:#fff;text-decoration:none;font-weight:600;padding:6px 12px;border-radius:12px;transition:all .18s ease}
 .topbar-link.active{background:rgba(255,204,0,0.12);color:var(--accent)}
-
-/* logo */
 .logo{position:fixed;width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(10px) brightness(1.12);border:1px solid rgba(255,255,255,0.14);box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:70;display:flex;align-items:center;justify-content:center;overflow:hidden}
-
-/* container */
 .container{max-width:1000px;margin:140px auto 60px;padding:20px;z-index:10;position:relative;display:flex;flex-direction:column;gap:18px;align-items:center}
 .card{width:100%;background:var(--glass-bg);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:18px;box-shadow:0 20px 50px rgba(2,6,23,0.6)}
-
-/* title and iframe box */
 .title{font-size:22px;color:var(--accent);margin-bottom:8px}
-.iframe-wrap{width:100%;height:600px;background:#000;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
-
-/* buttons row */
+.iframe-wrap{width:100%;height:600px;background:#000;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
 .row{display:flex;gap:12px;align-items:center;width:100%}
 .btn{padding:12px 18px;border-radius:12px;border:none;cursor:pointer;font-weight:700;transition:transform .18s,box-shadow .18s}
 .btn.play{background:linear-gradient(90deg,#2dd36f,#21c26f);color:#021;box-shadow:0 8px 25px rgba(0,0,0,0.4)}
@@ -40,22 +30,18 @@ nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;bor
 </head>
 <body>
 <div class="overlay"></div>
-
 <img src="https://via.placeholder.com/120x120?text=Logo" class="logo" id="siteLogo" alt="logo">
 <div class="topbar-wrap"><nav class="topbar" id="topbar"></nav></div>
-
 <div class="container">
   <div class="card">
     <div class="title" id="gTitle">Loading game...</div>
-
     <div class="row">
-      <button class="btn play" id="btnPlay">CLICK TO PLAY</button>
+      <button class="btn play" id="btnPlay">PLAY</button>
       <button class="btn full" id="btnFull">FULLSCREEN</button>
       <button class="back" id="btnBack">Back</button>
       <div style="flex:1"></div>
       <div class="small" id="gPath"></div>
     </div>
-
     <div style="height:12px"></div>
     <div class="iframe-wrap" id="iframeContainer" aria-hidden="true"></div>
   </div>
@@ -84,20 +70,27 @@ if(storedLogo) document.getElementById('siteLogo').src = storedLogo;
 window.addEventListener('load', positionLogo);
 window.addEventListener('resize', positionLogo);
 
-/* which game */
+/* get game from index */
 const params = new URLSearchParams(location.search);
 const idx = params.get('game');
 const game = (games && games[idx]) ? games[idx] : null;
 
+const iframeContainer = document.getElementById('iframeContainer');
+const gTitle = document.getElementById('gTitle');
+const gPath = document.getElementById('gPath');
+
 if(!game){
-  document.getElementById('gTitle').innerText = 'Game not found';
+  gTitle.innerText = 'Game not found';
 } else {
-  document.getElementById('gTitle').innerText = game.name || 'Untitled';
-  document.getElementById('gPath').innerText = game.file || game.url || '';
+  gTitle.innerText = game.name || 'Untitled';
+  gPath.innerText = game.file || game.url || '';
+  // auto load game into iframe
+  iframeContainer.innerHTML = `<iframe src="${game.file || game.url}" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>`;
+  iframeContainer.setAttribute('aria-hidden','false');
+
   document.getElementById('btnPlay').addEventListener('click', ()=>{
-    const container = document.getElementById('iframeContainer');
-    container.innerHTML = `<iframe src="${game.file || game.url}" style="width:100%;height:100%;border:0"></iframe>`;
-    container.setAttribute('aria-hidden','false');
+    // just focus iframe
+    iframeContainer.scrollIntoView({behavior:'smooth'});
   });
   document.getElementById('btnFull').addEventListener('click', ()=>{
     window.open(game.file || game.url, '_blank');
@@ -107,8 +100,14 @@ if(!game){
 /* back */
 document.getElementById('btnBack').addEventListener('click', ()=> history.back());
 
-/* react to control panel updates */
-window.addEventListener('storage', (e)=>{ if(e.key && e.key.startsWith('uh_reload_')){ games = JSON.parse(storage.getItem('games')||'[]'); topbar = JSON.parse(storage.getItem('topbar')||'[]') ; renderTopbar(); positionLogo(); }});
+/* storage updates */
+window.addEventListener('storage', (e)=>{
+  if(e.key && e.key.startsWith('uh_reload_')){
+    games = JSON.parse(storage.getItem('games')||'[]'); 
+    topbar = JSON.parse(storage.getItem('topbar')||'[]');
+    renderTopbar(); positionLogo();
+  }
+});
 </script>
 </body>
 </html>
