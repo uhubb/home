@@ -78,7 +78,6 @@ async function fetchGames(){
     if(!res.ok) throw new Error('Failed to load games.json');
     const data = await res.json();
     if(!Array.isArray(data)) throw new Error('games.json must be an array');
-    localStorage.setItem('games', JSON.stringify(data)); // cache locally
     return data;
   } catch(err){
     console.warn('Falling back to localStorage due to error:', err);
