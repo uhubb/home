@@ -48,12 +48,27 @@ nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;bor
 </div>
 
 <script>
+/* ---- REMOVED LOCALSTORAGE GAME LOADING ---- */
+/* Only keep siteLogo storage */
 const storage = window.localStorage;
-let games = JSON.parse(storage.getItem('games')||'[]');
-let topbar = JSON.parse(storage.getItem('topbar')||'null');
-if(!topbar){ topbar = [{label:'Home',href:'index.html'},{label:'Apps',href:'#apps'}]; storage.setItem('topbar', JSON.stringify(topbar)); }
 
-function renderTopbar(){ const tb=document.getElementById('topbar'); tb.innerHTML=''; topbar.forEach((t,i)=>{ const a=document.createElement('a'); a.href=t.href||'#'; a.className='topbar-link' + (i===0?' active':''); a.innerText=t.label; tb.appendChild(a); }); }
+/* ---- FIXED: Static topbar (no caching / no localStorage) ---- */
+const topbar = [
+  { label:'Home', href:'index.html' },
+  { label:'Apps', href:'#apps' }
+];
+
+function renderTopbar(){
+  const tb=document.getElementById('topbar');
+  tb.innerHTML='';
+  topbar.forEach((t,i)=>{
+    const a=document.createElement('a');
+    a.href=t.href||'#';
+    a.className='topbar-link' + (i===0?' active':'');
+    a.innerText=t.label;
+    tb.appendChild(a);
+  });
+}
 renderTopbar();
 
 /* position logo */
@@ -70,27 +85,42 @@ if(storedLogo) document.getElementById('siteLogo').src = storedLogo;
 window.addEventListener('load', positionLogo);
 window.addEventListener('resize', positionLogo);
 
-/* get game from index */
+/* ---- FIXED: Get game index from URL ---- */
 const params = new URLSearchParams(location.search);
-const idx = params.get('game');
-const game = (games && games[idx]) ? games[idx] : null;
+const idx = Number(params.get('game'));
 
-const iframeContainer = document.getElementById('iframeContainer');
-const gTitle = document.getElementById('gTitle');
-const gPath = document.getElementById('gPath');
+/* ---- NEW: Fetch games.json ONLY ---- */
+let games = [];
+fetch('games.json?nocache='+Date.now())
+  .then(res => res.json())
+  .then(data => {
+    games = data;
+    loadGame();
+  })
+  .catch(err => {
+    document.getElementById('gTitle').innerText = "Error loading games.json";
+  });
 
-if(!game){
-  gTitle.innerText = 'Game not found';
-} else {
+function loadGame(){
+  const game = games[idx];
+
+  const iframeContainer = document.getElementById('iframeContainer');
+  const gTitle = document.getElementById('gTitle');
+
+  if(!game){
+    gTitle.innerText = 'Game not found';
+    return;
+  }
+
   gTitle.innerText = game.name || 'Untitled';
-  // auto load game into iframe
-  iframeContainer.innerHTML = `<iframe src="${game.file}" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>`;
+  iframeContainer.innerHTML =
+    `<iframe src="${game.file}" style="width:100%;height:100%;border:0;border-radius:16px"></iframe>`;
   iframeContainer.setAttribute('aria-hidden','false');
 
   document.getElementById('btnPlay').addEventListener('click', ()=>{
-    // just focus iframe
     iframeContainer.scrollIntoView({behavior:'smooth'});
   });
+
   document.getElementById('btnFull').addEventListener('click', ()=>{
     window.open(game.file || game.url, '_blank');
   });
@@ -98,15 +128,6 @@ if(!game){
 
 /* back */
 document.getElementById('btnBack').addEventListener('click', ()=> history.back());
-
-/* storage updates */
-window.addEventListener('storage', (e)=>{
-  if(e.key && e.key.startsWith('uh_reload_')){
-    games = JSON.parse(storage.getItem('games')||'[]'); 
-    topbar = JSON.parse(storage.getItem('topbar')||'[]');
-    renderTopbar(); positionLogo();
-  }
-});
 </script>
 </body>
 </html>
