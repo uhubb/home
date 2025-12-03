@@ -30,6 +30,24 @@
     "description": "The Famous 1v1.lol Game!"
   },
   {
+    "name": "Grow a Garden",
+    "logo": "https://www.spectator.com.au/wp-content/uploads/2025/07/5Julygamer.png",
+    "file": "games/growgarden.html",
+    "description": "Grow a Real Garden!"
+  },
+  {
+    "name": "Ragdoll Sim",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKF-w4sqxGeNqq7rXc5OQnlc3Tu-YZdunFFA&s",
+    "file": "games/ragdoll.html",
+    "description": "Ragdoll. This game is scary."
+  },
+  {
+    "name": "Don't Wake a Sleeping Brainrot",
+    "logo": "https://play-lh.googleusercontent.com/w8NXxI3kJhLHv9dd0tSe67XapPkId1mm94kplKWzpsnUvTLxLhVn86at_wyyjnFujlzM6-CP0eHb36AlDxkOjQ=w240-h480-rw",
+    "file": "games/dontwakeasleepingbrainrot.html",
+    "description": "Whatever you do, Do NOT Wake them up."
+  },
+  {
     "name": "Steal a Brainrot",
     "logo": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
     "file": "games/stealbrainrot.html",
