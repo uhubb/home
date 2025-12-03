@@ -30,6 +30,12 @@
     "description": "The Famous 1v1.lol Game!"
   },
   {
+    "name": "Drift Hunters",
+    "logo": "https://m.media-amazon.com/images/I/91SfPYITE-L.png",
+    "file": "games/drifthunters.html",
+    "description": "Best Car Drifting Game You'll Ever Find!"
+  },
+  {
     "name": "Grow a Garden",
     "logo": "https://www.spectator.com.au/wp-content/uploads/2025/07/5Julygamer.png",
     "file": "games/growgarden.html",
