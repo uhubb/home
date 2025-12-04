@@ -2,70 +2,70 @@
   {
     "type": "app",
     "name": "Chat",
-    "image": "https://em-content.zobj.net/source/apple/237/speech-balloon_1f4ac.png",
+    "logo": "https://em-content.zobj.net/source/apple/237/speech-balloon_1f4ac.png",
     "file": "https://www.authpro.com/auth/mehakboy/?action=chat",
     "description": "Supports Private Chatting with Your Friends!"
   },
   {
     "type": "app",
     "name": "VPN/Proxy   UNBLOCKED ⚡",
-    "image": "https://play-lh.googleusercontent.com/NA-RomO6wL3kRxX35xLCvyPMiXP0J2y74yYbTkV2R99DrvqgNJN6MpXFeXdi1T-opNHS",
+    "logo": "https://play-lh.googleusercontent.com/NA-RomO6wL3kRxX35xLCvyPMiXP0J2y74yYbTkV2R99DrvqgNJN6MpXFeXdi1T-opNHS",
     "file": "https://rammerhead.x443.pw/",
     "description": "A Browser but Every Single Website is Unblocked. (FULLSCREEN WORKS BEST)"
   },
   {
     "type": "app",
     "name": "Discord UNBLOCKED ⚡",
-    "image": "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/discord-app-icon.png",
+    "logo": "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/discord-app-icon.png",
     "file": "https://rammerhead.x443.pw/1adb32052b2346d686fa569d06af23ee/_rhstwWqs://zTci4UT.qMU/scsSABAm/@07",
     "description": "Chatting? Discord Gotchu."
   },
   {
     "type": "app",
     "name": "Minecraft 1.8 OPTIMIZED ⚡",
-    "image": "https://cdn2.steamgriddb.com/icon/34306fb932bcbe823afb4a0c675e3ece.png",
+    "logo": "https://cdn2.steamgriddb.com/icon/34306fb932bcbe823afb4a0c675e3ece.png",
     "file": "games/minecraft18.html",
     "description": "Real Minecraft 1.8! Optimized for FPS using Resent Client!"
   },
   {
     "type": "game",
     "name": "1v1.lol",
-    "image": "https://lh3.googleusercontent.com/Shj_hBe1ErpmWnJDFnfSyMSL2p3ID-VPQ-UF3t1iUkdJUj_mJ6Ea7GjnZeREW4RWBJ0z",
+    "logo": "https://lh3.googleusercontent.com/Shj_hBe1ErpmWnJDFnfSyMSL2p3ID-VPQ-UF3t1iUkdJUj_mJ6Ea7GjnZeREW4RWBJ0z",
     "file": "games/1v1lol.html",
     "description": "The Famous 1v1.lol Game!"
   },
   {
     "type": "game",
     "name": "Drift Hunters",
-    "image": "https://m.media-amazon.com/images/I/91SfPYITE-L.png",
+    "logo": "https://m.media-amazon.com/images/I/91SfPYITE-L.png",
     "file": "games/drifthunters.html",
     "description": "Best Car Drifting Game You'll Ever Find!"
   },
   {
     "type": "game",
     "name": "Grow a Garden",
-    "image": "https://www.spectator.com.au/wp-content/uploads/2025/07/5Julygamer.png",
+    "logo": "https://www.spectator.com.au/wp-content/uploads/2025/07/5Julygamer.png",
     "file": "games/growgarden.html",
     "description": "Grow a Real Garden!"
   },
   {
     "type": "game",
     "name": "Ragdoll Sim",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKF-w4sqxGeNqq7rXc5OQnlc3Tu-YZdunFFA&s",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKF-w4sqxGeNqq7rXc5OQnlc3Tu-YZdunFFA&s",
     "file": "games/ragdoll.html",
     "description": "Ragdoll. This game is scary."
   },
   {
     "type": "game",
     "name": "Don't Wake a Sleeping Brainrot",
-    "image": "https://play-lh.googleusercontent.com/w8NXxI3kJhLHv9dd0tSe67XapPkId1mm94kplKWzpsnUvTLxLhVn86at_wyyjnFujlzM6-CP0eHb36AlDxkOjQ=w240-h480-rw",
+    "logo": "https://play-lh.googleusercontent.com/w8NXxI3kJhLHv9dd0tSe67XapPkId1mm94kplKWzpsnUvTLxLhVn86at_wyyjnFujlzM6-CP0eHb36AlDxkOjQ=w240-h480-rw",
     "file": "games/dontwakeasleepingbrainrot.html",
     "description": "Whatever you do, Do NOT Wake them up."
   },
   {
     "type": "game",
     "name": "Steal a Brainrot",
-    "image": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
+    "logo": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
     "file": "games/stealbrainrot.html",
     "description": "Let's Go Steal a Brainrot!!!!"
   }
