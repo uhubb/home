@@ -93,41 +93,44 @@ h2{font-size:32px;margin-bottom:25px;color:var(--accent)}
 <script>
 const list = document.getElementById('gameList');
 
-/* fetch apps from apps.json */
-async function fetchApps(){
-  const res = await fetch('apps.json?nocache=' + Date.now());
-  if(!res.ok) throw new Error('Failed to load apps.json');
+/* FETCH COMBINED games.json */
+async function fetchAll(){
+  const res = await fetch('games.json?nocache=' + Date.now());
+  if(!res.ok) throw new Error('Failed to load games.json');
   const data = await res.json();
-  if(!Array.isArray(data)) throw new Error('apps.json must be an array');
+  if(!Array.isArray(data)) throw new Error('games.json must be an array');
   return data;
 }
 
-/* card renderer */
-function renderApps(apps){
+/* RENDER ONLY ITEMS WHERE type === "app" */
+function renderApps(all){
   list.innerHTML = '';
-  apps.forEach((g,i)=>{
+
+  const apps = all.filter(x => x.type === 'app');
+
+  apps.forEach(app=>{
+    const globalIndex = all.indexOf(app); // needed for launcher.html?game=
+
     const c = document.createElement('div');
     c.className = 'game-card';
     c.innerHTML = `
-      <img src="${g.logo || 'https://via.placeholder.com/640x360?text=No+Logo'}">
-      <b>${g.name || 'Unnamed App'}</b>
-      <p>${g.description || ''}</p>
+      <img src="${app.logo || 'https://via.placeholder.com/640x360?text=No+Logo'}">
+      <b>${app.name || 'Unnamed App'}</b>
+      <p>${app.description || ''}</p>
     `;
 
-    // open launcher
     c.onclick = () => {
-      if(!g.file) return alert('No file specified.');
-      window.location.href = `launcher.html?game=${i}`;
+      if(!app.file) return alert('No file specified.');
+      window.location.href = \`launcher.html?game=${globalIndex}\`;
     };
 
-    // same tilt effect
     c.onmousemove = e=>{
       const r = c.getBoundingClientRect();
       const x = e.clientX - r.left;
       const y = e.clientY - r.top;
       const rx = ((y - r.height/2) / r.height) * -30;
       const ry = ((x - r.width/2) / r.width) * 25;
-      c.style.transform = `translateY(-10px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      c.style.transform = \`translateY(-10px) rotateX(${rx}deg) rotateY(${ry}deg)\`;
     };
     c.onmouseleave = ()=>c.style.transform='translateY(0px) rotateX(0) rotateY(0)';
 
@@ -135,10 +138,10 @@ function renderApps(apps){
   });
 }
 
-/* init */
+/* INIT */
 (async function(){
-  const apps = await fetchApps();
-  renderApps(apps);
+  const all = await fetchAll();
+  renderApps(all);
 })();
 </script>
 
