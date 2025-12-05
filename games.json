@@ -36,6 +36,13 @@
   },
   {
     "type": "game",
+    "name": "Snake",
+    "logo": "https://play-lh.googleusercontent.com/mOFqOYW9sw-HnRD0hszCrGeRbdO2ByQzjyWLQ6mSvsgCARnM5dlYR9MEIbsPb9q18A",
+    "file": "games/snake.html",
+    "description": "Snake Game... But Better?"
+  },
+  {
+    "type": "game",
     "name": "Drift Hunters",
     "logo": "https://m.media-amazon.com/images/I/91SfPYITE-L.png",
     "file": "games/drifthunters.html",
