@@ -10,11 +10,31 @@
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#fff}
 body{background:url('bg.png') center/cover no-repeat fixed;background-color:#071025}
 .overlay{position:fixed;inset:0;background:rgba(6,8,12,0.45);z-index:0}
-.topbar-wrap{position:fixed;left:50%;top:36px;transform:translateX(-50%);z-index:60}
-nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;border-radius:999px;background:var(--glass-bg);backdrop-filter:blur(8px) saturate(150%) brightness(1.12);border:1px solid rgba(255,255,255,0.14);height:56px}
-.topbar-link{color:#fff;text-decoration:none;font-weight:600;padding:6px 12px;border-radius:12px;transition:all .18s ease}
-.topbar-link.active{background:rgba(255,204,0,0.12);color:var(--accent)}
-.logo{position:fixed;width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(10px) brightness(1.12);border:1px solid rgba(255,255,255,0.14);box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:70;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+/* ---- NEW NAVBAR (exact same as other pages) ---- */
+nav{
+  position:fixed;top:45px;left:50%;transform:translateX(-50%);
+  padding:12px 40px;background:rgba(255,255,255,0.08);
+  border-radius:40px;display:flex;gap:35px;z-index:10;
+  backdrop-filter:blur(12px) brightness(1.4);
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 10px 40px rgba(0,0,0,0.45),0 0 25px rgba(255,255,255,0.25)
+}
+nav a{text-decoration:none;color:white;font-size:18px;font-weight:600;transition:0.25s}
+nav a.active{color:#ffeb5a;text-shadow:0 0 10px #ffea7a}
+nav a:hover{color:#ffe066}
+
+/* NEW LOGO identical to other pages */
+.logo{
+  position:fixed;top:36px;left:calc(50% - 273px);
+  width:60px;height:60px;border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px) brightness(1.2);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5),0 0 20px rgba(255,255,255,0.25);
+  z-index:11
+}
+
+/* keep the rest of your file untouched */
 .container{max-width:1000px;margin:140px auto 60px;padding:20px;z-index:10;position:relative;display:flex;flex-direction:column;gap:18px;align-items:center}
 .card{width:100%;background:var(--glass-bg);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:18px;box-shadow:0 20px 50px rgba(2,6,23,0.6)}
 .title{font-size:22px;color:var(--accent);margin-bottom:8px}
@@ -28,10 +48,21 @@ nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;bor
 .back{margin-left:auto;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03);color:#fff;border:1px solid rgba(255,255,255,0.06)}
 </style>
 </head>
+
 <body>
 <div class="overlay"></div>
-<img src="https://via.placeholder.com/120x120?text=Logo" class="logo" id="siteLogo" alt="logo">
-<div class="topbar-wrap"><nav class="topbar" id="topbar"></nav></div>
+
+<!-- NEW LOGO + NAV (matches all your pages) -->
+<img src="https://as1.ftcdn.net/jpg/01/17/37/52/1000_F_117375292_mG3uH8FLmxTTq3l3VBwo0k1CZS4uGBot.jpg" class="logo" alt="logo">
+
+<nav>
+  <a href="main.html" class="active">Home</a>
+  <a href="lgsession.html">Proxy</a>
+  <a href="apps.html">Apps</a>
+  <a href="games.html">Games</a>
+</nav>
+
+<!-- EVERYTHING BELOW IS UNTOUCHED -->
 <div class="container">
   <div class="card">
     <div class="title" id="gTitle">Loading game...</div>
@@ -49,41 +80,7 @@ nav.topbar{display:inline-flex;align-items:center;gap:18px;padding:10px 22px;bor
 
 <script>
 /* ---- REMOVED LOCALSTORAGE GAME LOADING ---- */
-/* Only keep siteLogo storage */
 const storage = window.localStorage;
-
-/* ---- FIXED: Static topbar (no caching / no localStorage) ---- */
-const topbar = [
-  { label:'Home', href:'index.html' },
-  { label:'Apps', href:'#apps' }
-];
-
-function renderTopbar(){
-  const tb=document.getElementById('topbar');
-  tb.innerHTML='';
-  topbar.forEach((t,i)=>{
-    const a=document.createElement('a');
-    a.href=t.href||'#';
-    a.className='topbar-link' + (i===0?' active':'');
-    a.innerText=t.label;
-    tb.appendChild(a);
-  });
-}
-renderTopbar();
-
-/* position logo */
-function positionLogo(){
-  const logo = document.getElementById('siteLogo');
-  const tb = document.querySelector('.topbar-wrap .topbar');
-  if(!tb) return;
-  const rect = tb.getBoundingClientRect();
-  logo.style.left = (rect.left + window.scrollX - (logo.offsetWidth + 12)) + 'px';
-  logo.style.top = (rect.top + window.scrollY + (rect.height/2) - (logo.offsetHeight/2)) + 'px';
-}
-const storedLogo = storage.getItem('siteLogo');
-if(storedLogo) document.getElementById('siteLogo').src = storedLogo;
-window.addEventListener('load', positionLogo);
-window.addEventListener('resize', positionLogo);
 
 /* ---- FIXED: Get game index from URL ---- */
 const params = new URLSearchParams(location.search);
@@ -126,7 +123,6 @@ function loadGame(){
   });
 }
 
-/* back */
 document.getElementById('btnBack').addEventListener('click', ()=> history.back());
 </script>
 </body>
