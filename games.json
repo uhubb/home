@@ -71,6 +71,13 @@
   },
   {
     "type": "game",
+    "name": "Robbie Tycoon",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXv_BgKIsjcdAa7i-Etd9H1v478eIbo_c3RA&s",
+    "file": "games/dontwakeasleepingbrainrot.html",
+    "description": "Tycoon, ASMR Game"
+  },
+  {
+    "type": "game",
     "name": "Steal a Brainrot",
     "logo": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
     "file": "games/stealbrainrot.html",
