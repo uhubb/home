@@ -70,7 +70,9 @@ nav a.logout:hover{
   <a href="lgsession.html">Proxy</a>
   <a href="apps.html">Apps</a>
   <a href="games.html">Games</a>
-  <a class="logout" href="https://www.authpro.com/auth/mehakboy/?action=logout">Logout</a>
+<a class="logout-btn" title="Logout" href="#" onclick="logoutConfirm(event)">
+  🚪
+</a>
 </nav>
 
 <header>Unblocker Hub</header>
@@ -131,6 +133,18 @@ c.onclick = () => {
   const games = await fetchGames();
   renderGames(games);
 })();
+</script>
+<script>
+function logoutConfirm(e){
+  e.preventDefault();
+
+  const ok = confirm("Are you sure you want to log out?");
+  if(!ok) return;
+
+  // AuthPro logout + redirect
+  window.location.href =
+    "https://www.authpro.com/auth/logout/?return_url=https://mehak6767.github.io/home/main.html";
+}
 </script>
 
 </body>
