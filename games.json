@@ -87,7 +87,7 @@
     "type": "game",
     "name": "Cookie Mine Clicker",
     "logo": "cmc.png",
-    "file": "games/cookiemineclicker.png",
+    "file": "games/cookiemineclicker.html",
     "description": "Cookie Clicker.. but in Minecraft?"
   }
 ]
