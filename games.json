@@ -82,5 +82,12 @@
     "logo": "https://assets-prd.ignimgs.com/2025/08/28/steal-a-brainrot-button-1756389161332.jpg",
     "file": "games/stealbrainrot.html",
     "description": "Let's Go Steal a Brainrot!!!!"
+  },
+  {
+    "type": "game",
+    "name": "Cookie Mine Clicker",
+    "logo": "cmc.png",
+    "file": "games/cookiemineclicker.png",
+    "description": "Cookie Clicker.. but in Minecraft?"
   }
 ]
