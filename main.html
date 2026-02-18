@@ -16,27 +16,6 @@ nav{position:fixed;top:45px;left:50%;transform:translateX(-50%);padding:12px 40p
 nav a{text-decoration:none;color:white;font-size:18px;font-weight:600;transition:0.25s}
 nav a.active{color:#ffeb5a;text-shadow:0 0 10px #ffea7a}
 nav a:hover{color:#ffe066}
-.nav-btn{
-  background:none;
-  border:none;
-  color:white;
-  font-size:18px;
-  font-weight:600;
-  padding:6px 14px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.25s;
-}
-
-.nav-btn:hover{
-  background:rgba(255,255,255,0.08);
-}
-
-.nav-btn.active{
-  background:rgba(255,235,90,0.15);
-  color:#ffeb5a;
-  box-shadow:0 0 12px rgba(255,235,90,0.35);
-}
 
 .logo{position:fixed;top:36px;left:calc(50% - 273px);width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(12px) brightness(1.2);box-shadow:0 10px 30px rgba(0,0,0,0.5),0 0 20px rgba(255,255,255,0.25);z-index:11}
 header{margin-top:160px;text-align:center;font-size:48px;font-weight:700;text-shadow:0 0 25px rgba(255,255,255,0.3)}
@@ -86,11 +65,12 @@ nav a.logout:hover{
 
 <img src="https://as1.ftcdn.net/jpg/01/17/37/52/1000_F_117375292_mG3uH8FLmxTTq3l3VBwo0k1CZS4uGBot.jpg" class="logo" alt="logo">
 
-<nav class="topbar">
-  <button class="nav-btn active" data-go="main.html">Home</button>
-  <button class="nav-btn" data-go="lgsession.html">Proxy</button>
-  <button class="nav-btn" data-go="apps.html">Apps</button>
-  <button class="nav-btn" data-go="games.html">Games</button>
+<nav>
+  <a class="active" href="main.html">Home</a>
+  <a href="lgsession.html">Proxy</a>
+  <a href="apps.html">Apps</a>
+  <a href="games.html">Games</a>
+</a>
 </nav>
 
 <header>Unblocker Hub</header>
@@ -176,21 +156,6 @@ const wallpapers = [
 const pick = wallpapers[Math.floor(Math.random()*wallpapers.length)];
 
 document.body.style.background = `url('${pick}') center/cover no-repeat fixed`;
-</script>
-<script>
-const buttons = document.querySelectorAll(".nav-btn");
-
-buttons.forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    window.location.href = btn.dataset.go;
-  });
-
-  // auto set active based on current page
-  if(location.pathname.includes(btn.dataset.go)){
-    buttons.forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-  }
-});
 </script>
 </body>
 </html>
